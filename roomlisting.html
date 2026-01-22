@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Hunt - List Your Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .success-message {
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white">
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <!-- Back to Home Button -->
+        <div class="mb-6">
+            <a href="index.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Home
+            </a>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">List Your Room</h1>
+            <p class="text-gray-600 text-lg">Find the perfect roommate for your hostel or flat</p>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden mb-6">
+            <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg shadow-md success-message">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="font-medium">Room listed successfully!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="bg-gray-50 rounded-2xl shadow-lg p-8">
+            <form id="roomForm" class="space-y-6">
+                <!-- Property Details Section -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-1 h-6 bg-blue-500 rounded-full mr-3"></div>
+                        <h2 class="text-lg font-bold text-gray-900 flex items-center">
+                            🏠 Property Details
+                        </h2>
+                    </div>
+                    
+                    <!-- BHK -->
+                    <div class="mb-6">
+                        <label for="bhk" class="block text-sm font-semibold text-gray-900 mb-2">BHK Type</label>
+                        <select id="bhk" name="bhk" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white appearance-none cursor-pointer">
+                            <option value="">Select BHK</option>
+                            <option value="1RK">1RK</option>
+                            <option value="1BHK">1BHK</option>
+                            <option value="2BHK">2BHK</option>
+                            <option value="3BHK">3BHK</option>
+                            <option value="4BHK">4BHK</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Number of Roommates -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label for="roommates" class="block text-sm font-semibold text-gray-900 mb-2">Number of Roommates</label>
+                        <select id="roommates" name="roommates" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white appearance-none cursor-pointer">
+                            <option value="">Select count</option>
+                            <option value="0">0 (Solo)</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5+</option>
+                        </select>
+                    </div>
+
+                    <!-- Building Name -->
+                    <div>
+                        <label for="building" class="block text-sm font-semibold text-gray-900 mb-2">Building Name</label>
+                        <input type="text" id="building" name="building" placeholder="e.g., Sunrise Apartments" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white transform hover:scale-[1.01] focus:scale-[1.01]">
+                    </div>
+                </div>
+
+                <!-- Locality Name -->
+                <div class="mb-8">
+                    <label for="locality" class="block text-sm font-semibold text-gray-900 mb-2">Locality/Area</label>
+                    <input type="text" id="locality" name="locality" placeholder="e.g., Koramangala, BTM Layout" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white transform hover:scale-[1.01] focus:scale-[1.01]">
+                </div>
+
+                <!-- Pricing Details Section -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-1 h-6 bg-amber-500 rounded-full mr-3"></div>
+                        <h2 class="text-lg font-bold text-gray-900 flex items-center">
+                            💰 Pricing Details
+                        </h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Monthly Rent -->
+                        <div>
+                            <label for="rent" class="block text-sm font-semibold text-gray-900 mb-2">Rent per Month (₹)</label>
+                            <input type="text" id="rent" name="rent" placeholder="15000" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white transform hover:scale-[1.01] focus:scale-[1.01]">
+                        </div>
+
+                        <!-- Deposit Amount -->
+                        <div>
+                            <label for="deposit" class="block text-sm font-semibold text-gray-900 mb-2">Security Deposit (₹)</label>
+                            <input type="text" id="deposit" name="deposit" placeholder="30000" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white transform hover:scale-[1.01] focus:scale-[1.01]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accommodation Type Section -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-1 h-6 bg-emerald-500 rounded-full mr-3"></div>
+                        <h2 class="text-lg font-bold text-gray-900 flex items-center">
+                            🏡 Accommodation Details
+                        </h2>
+                    </div>
+
+                    <!-- Lister Message -->
+                    <div class="mb-6">
+                        <label for="message" class="block text-sm font-semibold text-gray-900 mb-2">📝 Tell us about your space</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Describe your room, amenities, preferences for roommates, nearby facilities..." required
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 resize-vertical min-h-[100px] bg-white transform hover:scale-[1.01] focus:scale-[1.01]"></textarea>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="phone" class="block text-sm font-semibold text-gray-900 mb-2">📞 Contact Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your mobile number" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white transform hover:scale-[1.01] focus:scale-[1.01]">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-6">
+                    <button type="submit" 
+                            class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 animate-pulse hover:animate-none">
+                        <span class="flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            🚀 Post My Room
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8">
+            <p class="text-gray-500 text-sm">© 2025 Hostel Hunt - Connecting Students with Perfect Rooms</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('roomForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                id: Date.now(), // Simple ID generation
+                bhk: document.getElementById('bhk').value,
+                roommates: document.getElementById('roommates').value,
+                building: document.getElementById('building').value,
+                locality: document.getElementById('locality').value,
+                rent: document.getElementById('rent').value.replace(/,/g, ''), // Remove commas for storage
+                deposit: document.getElementById('deposit').value.replace(/,/g, ''), // Remove commas for storage
+                message: document.getElementById('message').value,
+                phone: document.getElementById('phone').value,
+                listedDate: new Date().toISOString()
+            };
+
+            // Get existing rooms from localStorage or create empty array
+            let existingRooms = JSON.parse(localStorage.getItem('hostelRooms') || '[]');
+            
+            // Add new room data to the array
+            existingRooms.push(formData);
+            
+            // Save updated array back to localStorage
+            localStorage.setItem('hostelRooms', JSON.stringify(existingRooms));
+
+            // Clear the form
+            document.getElementById('roomForm').reset();
+            
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.remove('hidden');
+            
+            // Scroll to top to show the success message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Hide success message after 4 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 4000);
+
+            // Log the stored data for demo purposes
+            console.log('Room listed successfully:', formData);
+            console.log('Total rooms in storage:', existingRooms.length);
+        });
+
+        // Add some interactivity to form fields
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.classList.add('ring-2', 'ring-blue-500', 'border-transparent');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.classList.remove('ring-2', 'ring-blue-500', 'border-transparent');
+            });
+        });
+
+        // Format phone number as user types
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+            e.target.value = value;
+        });
+
+        // Format rent and deposit with thousand separators (allow up to 10 digits)
+        ['rent', 'deposit'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function(e) {
+                let value = e.target.value.replace(/,/g, '').replace(/\D/g, '');
+                if (value.length > 10) {
+                    value = value.slice(0, 10);
+                }
+                if (value && !isNaN(value)) {
+                    e.target.value = parseInt(value).toLocaleString('en-IN');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
